@@ -26,24 +26,32 @@ Date.prototype.addHours = function (h) {
 
 function populateUI() {
   countdownActive = setInterval(() => {
-  const now = new Date().addHours(-4).getTime();
-  const distance = countdownValue - now;
-  const days = Math.floor(distance / day);
-  const hours = Math.floor((distance % day) / hour);
-  const minutes = Math.floor((distance % hour) / minute);
-  const seconds = Math.floor((distance % minute) / second);
+    const now = new Date().addHours(-4).getTime();
+    const distance = countdownValue - now;
+    const days = Math.floor(distance / day);
+    const hours = Math.floor((distance % day) / hour);
+    const minutes = Math.floor((distance % hour) / minute);
+    const seconds = Math.floor((distance % minute) / second);
 
-  countdownTitleElement.textContent = `${countdownTitle}`;
-  timeElements[0].textContent = `${days}`;
-  timeElements[1].textContent = `${hours}`;
-  timeElements[2].textContent = `${minutes}`;
-  timeElements[3].textContent = `${seconds}`;
+    countdownTitleElement.textContent = `${countdownTitle}`;
+    timeElements[0].textContent = `${days}`;
+    timeElements[1].textContent = `${hours}`;
+    timeElements[2].textContent = `${minutes}`;
+    timeElements[3].textContent = `${seconds}`;
 
-  inputContainer.hidden = true;
-  countdownElement.hidden = false;
+    inputContainer.hidden = true;
+    countdownElement.hidden = false;
   }, second);
 }
 
+function resetCountdown() {
+  countdownElement.hidden = true;
+  inputContainer.hidden = false;
+
+  clearInterval(countdownActive);
+
+  countdownTitle = "";
+  countdownDate = "";
 }
 
 function updateCountdown(event) {
@@ -57,3 +65,4 @@ function updateCountdown(event) {
 }
 
 countdownForm.addEventListener("submit", updateCountdown);
+countdownButtonElement.addEventListener("click", resetCountdown);
