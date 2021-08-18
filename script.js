@@ -59,9 +59,14 @@ function updateCountdown(event) {
   // Get values from form input
   countdownTitle = event.target[0].value;
   countdownDate = event.target[1].value;
-  // Get number version of current date, updateDOM
-  countdownValue = new Date(countdownDate).getTime();
-  populateUI();
+
+  if (countdownDate === "") {
+    alert("Please select a valid date");
+  } else {
+    // Get number version of current date, updateDOM
+    countdownValue = new Date(countdownDate).getTime();
+    populateUI();
+  }
 }
 
 countdownForm.addEventListener("submit", updateCountdown);
