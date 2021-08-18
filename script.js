@@ -57,6 +57,7 @@ function populateUI() {
 
 function resetCountdown() {
   countdownElement.hidden = true;
+  completeElement.hidden = true;
   inputContainer.hidden = false;
 
   clearInterval(countdownActive);
@@ -82,3 +83,4 @@ function updateCountdown(event) {
 
 countdownForm.addEventListener("submit", updateCountdown);
 countdownButtonElement.addEventListener("click", resetCountdown);
+completeButtonElement.addEventListener("click", resetCountdown);
