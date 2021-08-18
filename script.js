@@ -5,6 +5,9 @@ const countdownElement = document.getElementById("countdown");
 const countdownTitleElement = document.getElementById("countdown-title");
 const countdownButtonElement = document.getElementById("countdown-button");
 const timeElements = document.querySelectorAll("span");
+const completeElement = document.getElementById("complete");
+const completeInfoElement = document.getElementById("complete-info");
+const completeButtonElement = document.getElementById("complete-button");
 
 const second = 1000;
 const minute = second * 60;
@@ -33,14 +36,22 @@ function populateUI() {
     const minutes = Math.floor((distance % hour) / minute);
     const seconds = Math.floor((distance % minute) / second);
 
-    countdownTitleElement.textContent = `${countdownTitle}`;
-    timeElements[0].textContent = `${days}`;
-    timeElements[1].textContent = `${hours}`;
-    timeElements[2].textContent = `${minutes}`;
-    timeElements[3].textContent = `${seconds}`;
-
     inputContainer.hidden = true;
-    countdownElement.hidden = false;
+
+    if (distance < 0) {
+      countdownElement.hidden = true;
+      clearInterval(countdownActive);
+      completeInfoElement.textContent = `${countdownTitle} finished on ${countdownDate}`;
+      completeElement.hidden = false;
+    } else {
+      countdownTitleElement.textContent = `${countdownTitle}`;
+      timeElements[0].textContent = `${days}`;
+      timeElements[1].textContent = `${hours}`;
+      timeElements[2].textContent = `${minutes}`;
+      timeElements[3].textContent = `${seconds}`;
+      completeElement.hidden = true;
+      countdownElement.hidden = false;
+    }
   }, second);
 }
 
