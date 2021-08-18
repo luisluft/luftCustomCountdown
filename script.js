@@ -14,6 +14,7 @@ const day = hour * 24;
 let countdownTitle = "";
 let countdownDate = "";
 let countdownValue = Date;
+let countdownActive;
 
 const today = new Date().toISOString().split("T")[0];
 datePickerElement.setAttribute("min", today);
@@ -24,6 +25,7 @@ Date.prototype.addHours = function (h) {
 };
 
 function populateUI() {
+  countdownActive = setInterval(() => {
   const now = new Date().addHours(-4).getTime();
   const distance = countdownValue - now;
   const days = Math.floor(distance / day);
@@ -39,6 +41,9 @@ function populateUI() {
 
   inputContainer.hidden = true;
   countdownElement.hidden = false;
+  }, second);
+}
+
 }
 
 function updateCountdown(event) {
