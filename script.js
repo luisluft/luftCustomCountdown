@@ -18,6 +18,7 @@ let countdownTitle = "";
 let countdownDate = "";
 let countdownValue = Date;
 let countdownActive;
+let savedCountdown;
 
 const today = new Date().toISOString().split("T")[0];
 datePickerElement.setAttribute("min", today);
@@ -64,6 +65,18 @@ function resetCountdown() {
 
   countdownTitle = "";
   countdownDate = "";
+  localStorage.removeItem("countdown");
+}
+
+function restorePreviousCountdown() {
+  if (localStorage.getItem("countdown")) {
+    inputContainer.hidden = true;
+    savedCountdown = JSON.parse(localStorage.getItem("countdown"));
+    countdownTitle = savedCountdown.title;
+    countdownDate = savedCountdown.date;
+    countdownValue = new Date(countdownDate).getTime();
+    populateUI();
+  }
 }
 
 function updateCountdown(event) {
@@ -71,6 +84,11 @@ function updateCountdown(event) {
   // Get values from form input
   countdownTitle = event.target[0].value;
   countdownDate = event.target[1].value;
+  savedCountdown = {
+    title: countdownTitle,
+    date: countdownDate,
+  };
+  localStorage.setItem("countdown", JSON.stringify(savedCountdown));
 
   if (countdownDate === "") {
     alert("Please select a valid date");
@@ -84,3 +102,6 @@ function updateCountdown(event) {
 countdownForm.addEventListener("submit", updateCountdown);
 countdownButtonElement.addEventListener("click", resetCountdown);
 completeButtonElement.addEventListener("click", resetCountdown);
+
+// On load
+restorePreviousCountdown();
